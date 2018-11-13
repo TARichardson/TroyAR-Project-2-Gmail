@@ -5,7 +5,7 @@ This app will help user organize and delete groups of old/new emails
 - gmail api link - https://developers.google.com/gmail/api/
 
 _User Story_
-1) Welcome Screen:
+1) Welcome Screen:  
 - user will be prompt to consent for the app to uses gmail account info
 2) Sorting Screen:
 - user will be presented with way to group and sort emails for viewing.
