@@ -1,5 +1,4 @@
 import axios from 'axios'
-const BASE_URL = '';
 
 async function getProfile (id,token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/profile`

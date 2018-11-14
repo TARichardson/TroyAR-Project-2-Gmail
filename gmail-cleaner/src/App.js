@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Gmail_API from './services/Gmail_API'
-import GoogleLogin from 'react-google-login'
+import Gmail_API from './services/Gmail_API';
+import WelcomePage from './component/WelcomePage';
+import SortingViewPage from './component/SortingViewPage';
+import ViewSortingPage from './component/ViewSortingPage';
+import WriteEmail from './component/WriteEmail';
+
 import './App.css';
-// sessions= {
-//   profile: '',
-//   email: '',
-//
-// }
-const SCOPE = 'https://mail.google.com/'
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -16,10 +15,8 @@ class App extends Component {
       haveSession: false,
       numSessions: 0,
       currentSession: -1,
+      currentViewState: -1,
     }
-  }
-
-  componentDidMount = () => {
   }
 
   findSession = (email) => {
@@ -69,18 +66,30 @@ class App extends Component {
         numSessions: numSessions,
         currentSession: currentSession,
         haveSession: haveSession,
+        currentViewState: 'SortingView',
 
       })
+    }
+  }
+
+  onView = () => {
+    const currentState = this.state.currentViewState;
+    switch (currentState) {
+      case 'SortingView':
+        return <SortingViewPage/>;
+      case 'ViewSorting':
+        return <ViewSortingPage/>;
+      case 'WriteEmail':
+        return <WriteEmail/>;
+      default:
+        return <WelcomePage handleProfile={this.getProfile}/>;
     }
   }
 
   render() {
     return (
       <div className="App">
-        <GoogleLogin clientId={process.env.REACT_APP_CLIENT_ID}
-                      scope={SCOPE}
-                      onSuccess={this.getProfile}
-                      onFailure={this.getProfile}/>
+        {this.onView()}
       </div>
     );
   }
