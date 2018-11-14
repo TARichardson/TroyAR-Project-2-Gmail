@@ -12,7 +12,8 @@ _User Story_
 3) View Sorting
 - select items to be deleted
 - user can now press delete button
-*Bonus* - Write an email
+_Bonus_
+- Write an email
 - User can click on model to start an emails
 - User can delete draft or sent emails
 - User can select account to sent the email with
@@ -41,7 +42,16 @@ _User Story_
 - ask for user consent to use gmail account.
 
 ### Tasks
-
+_Wednesday Nov 14 2018_
+- complete function calls to gmail api
+_Thursday Nov 15 2018_
+- complete the rendering of data from gmail api and user interaction with the app
+_Friday Nov 16 2018_
+- complete the sorting algorithms
+_Saturday Nov 17 2018_
+- complete style the app
+_Sunday Nov 18 2018_
+- complete refine the app
 
 ```javascript
 
