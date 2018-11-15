@@ -66,7 +66,7 @@ async function getMessage (id,msgId,token) {
     }
   }).then(value => {
       value.data.message = findGmailData(value.data.payload);
-      console.log(value);
+      console.log('this is value', value.data);
        return value;}).catch(error => console.log(error));
   //debugger;
    //resp.data.message = findGmailData(resp.data.payload);

@@ -15,7 +15,8 @@ function render(renderStyle, list) {
     console.log("in render " + list[0]);
       return (
         <Fragment>
-            <EmailItem message={list[0]}/>
+          {list.map( elem =>
+            (<EmailItem message={elem}/>))}
         </Fragment>
       )
     }

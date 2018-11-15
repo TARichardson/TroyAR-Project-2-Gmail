@@ -22,18 +22,28 @@ class App extends Component {
   }
 
   decodeInbox = async () => {
-    const  toRender = await this.state.rawAllInboxs.map(async (elem) => {
-                 const msg = await Gmail_API.getMessage(elem.userId,elem.id,elem.token).then(
-                   value => {return value}
-                 )
-                 return msg;
-               })
+    let  toRender = []
+    let rawAllInboxs = this.state.rawAllInboxs;
+    for(let i = 0; i < this.state.rawAllInboxs.length; i ++)
+    {
+      let elem = rawAllInboxs[i];
+      const msg = await Gmail_API.getMessage(elem.userId,elem.id,elem.token)
 
-    this.setState({
-      allInboxs: await toRender,
-    })
-
+      toRender.push( msg);
+    }
+    return toRender;
   }
+
+
+  // componentDidUpdate(data) {
+  //   if(this.props.allInboxs)
+  //   if(this.props.allInboxs[0] !== this.state.allInboxs[0])
+  //   {
+  //     this.setState({
+  //       allInboxs: data,
+  //     })
+  //   }
+  // }
 
   addInbox = async () => {
       let rawAllInboxs = this.state.rawAllInboxs;
@@ -46,8 +56,11 @@ class App extends Component {
       if(rawAllInboxs.lenght > 50) {
         console.log(...rawAllInboxs.slice(51) );
       }
-
-      await this.decodeInbox();
+      const result = await this.decodeInbox();
+      console.log(result);
+      this.setState({
+        allInboxs: result,
+      })
   }
 
   findSession = (email) => {
