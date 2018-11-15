@@ -1,4 +1,36 @@
 import axios from 'axios'
+import utf8 from 'utf8';
+import base64 from 'base-64';
+const mimeType = "text/html";
+
+const decodeGmail = (data) => {
+  // google encodes the base64 string to decode it I need to replace characters
+  // "-" (minus character) by "+" (plus character)
+  // "_" (underscore character) by "/" (slash character)
+  const rexp = /-/g;
+  const rexp2 = /_/g;
+  let decodeEmail = data.replace(rexp, '+').replace(rexp2, '/');
+  // normal decode of base64
+  let bytes = base64.decode(decodeEmail);
+  let str = utf8.decode(bytes);
+  return str;
+}
+const findGmailData = (data) => {
+  if(data.mimeType === mimeType){
+    return decodeGmail(data.body.data);
+  }
+  else{
+    for(let index = 0; index < data.parts.length; index++) {
+      if(data.parts[index].mimeType === mimeType) {
+        return decodeGmail(data.parts[index].body.data);
+      }
+    }
+  }
+
+}
+const encodeGmail = () => {
+
+}
 
 async function getProfile (id,token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/profile`
@@ -33,7 +65,10 @@ async function getMessage (id,msgId,token) {
         Authorization: token,
     }
   });
-  return resp;
+  //debugger;
+  resp.data.message = findGmailData(resp.data.payload);
+
+  return resp.data;
 }
 
 async function deleteMessage (id, msgId,token) {

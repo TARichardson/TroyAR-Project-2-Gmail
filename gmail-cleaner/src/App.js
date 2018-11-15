@@ -16,7 +16,22 @@ class App extends Component {
       numSessions: 0,
       currentSession: -1,
       currentViewState: -1,
+      allInboxs: [],
     }
+  }
+
+  addInbox = () => {
+      let allInboxs = this.state.allInboxs;
+      let index = this.state.currentSession;
+      allInboxs.push(...this.state.sessions[index].inbox);
+
+      this.setState({
+        allInboxs: allInboxs,
+      })
+      console.log(allInboxs);
+      if(allInboxs.lenght > 50) {
+        console.log(...allInboxs.slice(51) );
+      }
   }
 
   findSession = (email) => {
@@ -32,7 +47,6 @@ class App extends Component {
 
   getProfile = async (pro) => {
     if(pro) {
-      //console.log(pro);
       const tempEmail = pro.profileObj.email;
       const exist = this.findSession(tempEmail);
       const sessions = this.state.sessions;
@@ -49,7 +63,12 @@ class App extends Component {
         const messages = await Gmail_API.getInbox(id,tempToken);
         let messagesTotal = messages.data.resultSizeEstimate;
         let inbox = messages.data.messages;
-        console.log(messages);
+        for(let index = 0; index < inbox.length; index++){
+          inbox[index].token = tempToken;
+          inbox[index].userId = id
+        }
+
+        console.log(inbox);
 
         sessions.push({
           id: id,
@@ -59,8 +78,8 @@ class App extends Component {
           messagesTotal: messagesTotal,
           inbox: inbox,
         });
-
       }
+
       this.setState({
         sessions: sessions,
         numSessions: numSessions,
@@ -69,6 +88,7 @@ class App extends Component {
         currentViewState: 'SortingView',
 
       })
+      this.addInbox();
     }
   }
 
@@ -76,7 +96,9 @@ class App extends Component {
     const currentState = this.state.currentViewState;
     switch (currentState) {
       case 'SortingView':
-        return <SortingViewPage/>;
+        return <SortingViewPage handleProfile={this.getProfile}
+                                allInboxs={this.state.allInboxs}
+                                />;
       case 'ViewSorting':
         return <ViewSortingPage/>;
       case 'WriteEmail':
