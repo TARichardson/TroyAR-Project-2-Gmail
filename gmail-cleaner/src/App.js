@@ -16,22 +16,38 @@ class App extends Component {
       numSessions: 0,
       currentSession: -1,
       currentViewState: -1,
+      rawAllInboxs: [],
       allInboxs: [],
     }
   }
 
-  addInbox = () => {
-      let allInboxs = this.state.allInboxs;
+  decodeInbox = async () => {
+    const  toRender = await this.state.rawAllInboxs.map(async (elem) => {
+                 const msg = await Gmail_API.getMessage(elem.userId,elem.id,elem.token).then(
+                   value => {return value}
+                 )
+                 return msg;
+               })
+
+    this.setState({
+      allInboxs: await toRender,
+    })
+
+  }
+
+  addInbox = async () => {
+      let rawAllInboxs = this.state.rawAllInboxs;
       let index = this.state.currentSession;
-      allInboxs.push(...this.state.sessions[index].inbox);
+      rawAllInboxs.push(...this.state.sessions[index].inbox);
 
       this.setState({
-        allInboxs: allInboxs,
+        rawAllInboxs: rawAllInboxs,
       })
-      console.log(allInboxs);
-      if(allInboxs.lenght > 50) {
-        console.log(...allInboxs.slice(51) );
+      if(rawAllInboxs.lenght > 50) {
+        console.log(...rawAllInboxs.slice(51) );
       }
+
+      await this.decodeInbox();
   }
 
   findSession = (email) => {
@@ -68,8 +84,6 @@ class App extends Component {
           inbox[index].userId = id
         }
 
-        console.log(inbox);
-
         sessions.push({
           id: id,
           email: tempEmail,
@@ -88,7 +102,7 @@ class App extends Component {
         currentViewState: 'SortingView',
 
       })
-      this.addInbox();
+      await this.addInbox();
     }
   }
 

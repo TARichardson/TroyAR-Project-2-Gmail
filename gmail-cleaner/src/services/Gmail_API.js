@@ -64,11 +64,14 @@ async function getMessage (id,msgId,token) {
     headers: {
         Authorization: token,
     }
-  });
+  }).then(value => {
+      value.data.message = findGmailData(value.data.payload);
+      console.log(value);
+       return value;}).catch(error => console.log(error));
   //debugger;
-  resp.data.message = findGmailData(resp.data.payload);
-
-  return resp.data;
+   //resp.data.message = findGmailData(resp.data.payload);
+  //  console.log(resp);
+  return resp;
 }
 
 async function deleteMessage (id, msgId,token) {

@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import EmailFull from './EmailFull';
 import EmailItem from './EmailItem';
-import Gmail_API from '../services/Gmail_API';
 
 function render(renderStyle, list) {
   //console.log(list);
@@ -13,26 +12,10 @@ function render(renderStyle, list) {
         </Fragment>
       )
     default:
-  let  toRender = list.map(async (elem) =>
-               (await Gmail_API.getMessage(elem.userId,elem.id,elem.token) )
-            )
-            try{
-              console.log(toRender);
-
-              return(
-              <Fragment>
-                  <EmailItem message={toRender}/>
-              </Fragment>)
-            }
-            catch{
-              console.log(toRender);
-
-            }
-
-
+    console.log("in render " + list[0]);
       return (
         <Fragment>
-            <EmailItem message="ddf"/>
+            <EmailItem message={list[0]}/>
         </Fragment>
       )
     }
