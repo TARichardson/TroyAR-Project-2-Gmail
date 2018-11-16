@@ -10,9 +10,10 @@ export default function SortingViewPage(props) {
                   onSuccess={props.handleProfile}
                   onFailure={props.handleProfile}
                   />
-      <h1>Sorting View </h1>
+      <div><h1>Sorting View </h1></div>
       <EmailList allInboxs={props.allInboxs}
-                renderStyle='Item'/>
+                renderStyle='Item'
+                deleteHandle={props.deleteHandle}/>
     </div>
   )
 }

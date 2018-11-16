@@ -118,6 +118,18 @@ class App extends Component {
       await this.addInbox();
     }
   }
+  onRefreshInbox = () => {
+
+  }
+
+  onDelete = async (evt) => {
+    debugger
+    let email = evt.target;
+    console.log(email);
+    let resp = await Gmail_API.deleteMessage(email.id,email.title,email.slot)
+                              .then(msg => console.log(msg));
+    this.onRefreshInbox();
+  }
 
   onView = () => {
     const currentState = this.state.currentViewState;
@@ -125,7 +137,7 @@ class App extends Component {
       case 'SortingView':
         return <SortingViewPage handleProfile={this.getProfile}
                                 allInboxs={this.state.allInboxs}
-                                />;
+                                deleteHandle={this.onDelete}/>;
       case 'ViewSorting':
         return <ViewSortingPage/>;
       case 'WriteEmail':
@@ -134,6 +146,8 @@ class App extends Component {
         return <WelcomePage handleProfile={this.getProfile}/>;
     }
   }
+
+
 
   render() {
     return (

@@ -35,7 +35,7 @@ const encodeGmail = () => {
 async function getProfile (id,token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/profile`
   const resp = await axios({
-    medhod: 'get',
+    method: 'get',
     url: URL,
     headers: {
         Authorization: token,
@@ -47,7 +47,7 @@ async function getProfile (id,token) {
 async function getInbox (id, token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages`
   const resp = await axios({
-    medhod: 'get',
+    method: 'get',
     url: URL,
     headers: {
         Authorization: token,
@@ -60,13 +60,15 @@ async function getInbox (id, token) {
 async function getMessage (id,msgId,token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/${msgId}`
   const resp = await axios({
-    medhod: 'get',
+    method: 'get',
     url: URL,
     headers: {
         Authorization: token,
     }
   }).then( value => {
       value.data.message = findGmailData(value.data.payload);
+      value.data.user = id;
+      value.data.token = token;
        return value;}).catch(error => console.log(error));
   //debugger;
    //resp.data.message = findGmailData(resp.data.payload);
@@ -75,9 +77,11 @@ async function getMessage (id,msgId,token) {
 }
 
 async function deleteMessage (id, msgId,token) {
+  debugger;
+
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/${msgId}`
   const resp = await axios({
-    medhod: 'delete',
+    method: 'delete',
     url: URL,
     headers: {
         Authorization: token,
@@ -94,7 +98,7 @@ async function deleteGroupMessage (id, msgIds,token) {
   }
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/batchDelete`
   const resp = await axios({
-    medhod: 'delete',
+    method: 'delete',
     url: URL,
     headers: {
         Authorization: token,
@@ -114,7 +118,7 @@ async function deleteGroupMessage (id, msgIds,token) {
 async function modifyMessage (id, msgId,token) {
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/modify`
   const resp = await axios({
-    medhod: 'post',
+    method: 'post',
     url: URL,
     headers: {
         Authorization: token,
@@ -141,7 +145,7 @@ async function modifyGroupMessage (id, msgIds,token) {
   }
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/batchModify`
   const resp = await axios({
-    medhod: 'post',
+    method: 'post',
     url: URL,
     headers: {
         Authorization: token,
