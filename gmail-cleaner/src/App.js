@@ -17,7 +17,7 @@ class App extends Component {
       currentSession: -1,
       currentViewState: -1,
       rawAllInboxs: [],
-      allInboxs: [],
+      allInboxs: [{},],
     }
   }
 

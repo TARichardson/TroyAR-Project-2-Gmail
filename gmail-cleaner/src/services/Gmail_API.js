@@ -53,6 +53,7 @@ async function getInbox (id, token) {
         Authorization: token,
     }
   });
+  console.log(resp);
   return resp;
 }
 
@@ -64,9 +65,8 @@ async function getMessage (id,msgId,token) {
     headers: {
         Authorization: token,
     }
-  }).then(value => {
+  }).then( value => {
       value.data.message = findGmailData(value.data.payload);
-      console.log('this is value', value.data);
        return value;}).catch(error => console.log(error));
   //debugger;
    //resp.data.message = findGmailData(resp.data.payload);

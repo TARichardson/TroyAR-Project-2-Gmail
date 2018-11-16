@@ -3,7 +3,6 @@ import EmailFull from './EmailFull';
 import EmailItem from './EmailItem';
 
 function render(renderStyle, list) {
-  //console.log(list);
   switch(renderStyle) {
     case 'Full':
       return (
@@ -12,11 +11,10 @@ function render(renderStyle, list) {
         </Fragment>
       )
     default:
-    console.log("in render " + list[0]);
       return (
-        <Fragment>
-          {list.map( elem =>
-            (<EmailItem message={elem}/>))}
+        <Fragment key="EmailListFrag">
+          {list.map( (elem, index) =>
+            (<EmailItem message={elem} num={index}/>))}
         </Fragment>
       )
     }
@@ -24,7 +22,7 @@ function render(renderStyle, list) {
 
 export default function EmailList(props) {
   return (
-    <div className="EmailListDiv">
+    <div key="EmailListDiv" className="EmailListDiv">
       {render(props.renderStyle,props.allInboxs)}
     </div>
   )

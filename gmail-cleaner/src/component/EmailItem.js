@@ -1,9 +1,10 @@
 import React from 'react'
 
 export default function EmailItem(props) {
+  let key = props.num;
   try{
   return (
-    <h1 key={props.message.data.id }className='emailView'
+    <div key={key} className='emailView'
       dangerouslySetInnerHTML={{
         __html: props.message.data.message,
       }}/>
@@ -11,7 +12,7 @@ export default function EmailItem(props) {
 }
 catch{
   return (
-    <h1>Loading . . . </h1>
+    <h1 key={key}>Loading . . . </h1>
   )
 }
 }
