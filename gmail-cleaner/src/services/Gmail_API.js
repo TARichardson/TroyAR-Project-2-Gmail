@@ -2,6 +2,8 @@ import axios from 'axios'
 import utf8 from 'utf8';
 import base64 from 'base-64';
 const mimeType = "text/html";
+const mimeTypeFallback = "text/plain";
+
 
 const decodeGmail = (data) => {
   // google encodes the base64 string to decode it I need to replace characters
@@ -15,14 +17,34 @@ const decodeGmail = (data) => {
   let str = utf8.decode(bytes);
   return str;
 }
+
 const findGmailData = (data) => {
-  if(data.mimeType === mimeType){
+  try {
+    if(data.mimeType === mimeType){
+    data.bool = true;
     return decodeGmail(data.body.data);
+    }
+    else{
+      data.bool = true;
+      for(let index = 0; index < data.parts.length; index++) {
+        if(data.parts[index].mimeType === mimeType) {
+          return decodeGmail(data.parts[index].body.data);
+        }
+      }
+    }
   }
-  else{
-    for(let index = 0; index < data.parts.length; index++) {
-      if(data.parts[index].mimeType === mimeType) {
-        return decodeGmail(data.parts[index].body.data);
+  catch{
+    console.log(data);
+    if(data.mimeType === mimeTypeFallback){
+      data.bool = false;
+    return decodeGmail(data.body.data);
+    }
+    else{
+      data.bool = false;
+      for(let index = 0; index < data.parts.length; index++) {
+        if(data.parts[index].mimeType === mimeTypeFallback) {
+          return decodeGmail(data.parts[index].body.data);
+        }
       }
     }
   }
@@ -77,7 +99,6 @@ async function getMessage (id,msgId,token) {
 }
 
 async function deleteMessage (id, msgId,token) {
-  debugger;
 
   const URL = `https://www.googleapis.com/gmail/v1/users/${id}/messages/${msgId}`
   const resp = await axios({

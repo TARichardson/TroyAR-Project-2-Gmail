@@ -6,10 +6,11 @@ import ViewSortingPage from './component/ViewSortingPage';
 import WriteEmail from './component/WriteEmail';
 
 import './App.css';
-
 class App extends Component {
   constructor(props){
     super(props);
+
+
     this.state = {
       sessions: [],
       haveSession: false,
@@ -33,17 +34,6 @@ class App extends Component {
     }
     return toRender;
   }
-
-
-  // componentDidUpdate(data) {
-  //   if(this.props.allInboxs)
-  //   if(this.props.allInboxs[0] !== this.state.allInboxs[0])
-  //   {
-  //     this.setState({
-  //       allInboxs: data,
-  //     })
-  //   }
-  // }
 
   addInbox = async () => {
       let rawAllInboxs = this.state.rawAllInboxs;
@@ -118,10 +108,50 @@ class App extends Component {
       await this.addInbox();
     }
   }
-  onRefreshInbox = () => {
+  onRefreshInbox = async () => {
+    let messagesTotal = 0;
+    let rawInbox = [];
+    const updatedSessions = [];
+    debugger
+    for(let index = 0; index < this.state.numSessions; index++) {
+      let tempToken = this.state.sessions[index].accessToken;
+      let id = this.state.sessions[index].id;
+      let name = this.state.sessions[index].name;
+      let tempEmail = this.state.sessions[index].email;
+      const messages = await Gmail_API.getInbox(id,tempToken);
+      let currentMessagesTotal = messages.data.messages.length;
+      let inbox = messages.data.messages;
 
+      for(let index = 0; index < inbox.length; index++){
+        inbox[index].token = tempToken;
+        inbox[index].userId = id
+      }
+
+      updatedSessions.push({
+        id: id,
+        email: tempEmail,
+        accessToken: tempToken,
+        name: name,
+        messagesTotal: currentMessagesTotal,
+        inbox: inbox,
+      });
+      messagesTotal += currentMessagesTotal;
+      rawInbox.push(...inbox);
+    }
+    this.setState({
+      sessions: updatedSessions,
+      rawAllInboxs: rawInbox,
+    })
+    const result = await this.decodeInbox();
+    console.log(result);
+    this.setState({
+      allInboxs: result,
+    })
   }
 
+  onRefresh = () => {
+    this.onRefreshInbox();
+  }
   onDelete = async (evt) => {
     debugger
     let email = evt.target;
