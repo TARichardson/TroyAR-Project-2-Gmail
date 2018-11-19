@@ -6,9 +6,13 @@ function render(renderStyle, list, deleteHnd) {
   switch(renderStyle) {
     case 'Full':
     return (
-      <Fragment>
-        <EmailFull/>
-      </Fragment>
+      <Fragment key="EmailListFrag"> {
+        list.map( (elem, index) => (
+          <EmailFull message={elem}
+            num={index}
+            deleteHandle={deleteHnd}/>
+          ))}
+        </Fragment>
     )
     default:
     return (

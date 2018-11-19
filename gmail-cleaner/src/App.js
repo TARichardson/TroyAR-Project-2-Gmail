@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Gmail_API from './services/Gmail_API';
-import SortsList from './component/SortsList'
+import SortsList from './component/SortsList';
 import WelcomePage from './component/WelcomePage';
 import SortingViewPage from './component/SortingViewPage';
 import ViewSortingPage from './component/ViewSortingPage';
@@ -34,7 +34,7 @@ class App extends Component {
       sortStack: arrSort,
     })
   }
-  
+
   decodeInbox = async () => {
     let  toRender = []
     let rawAllInboxs = this.state.rawAllInboxs;

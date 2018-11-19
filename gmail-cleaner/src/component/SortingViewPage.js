@@ -27,7 +27,7 @@ export default function SortingViewPage(props) {
       </div></div></div>
       <SideBar/>
       <EmailList allInboxs={props.allInboxs}
-        renderStyle='Item'
+        renderStyle='Full'
         deleteHandle={props.deleteHandle}/>
       </div>
     )
