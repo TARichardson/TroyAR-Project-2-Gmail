@@ -21,8 +21,8 @@ const decodeGmail = (data) => {
 const findGmailData = (data) => {
   try {
     if(data.mimeType === mimeType){
-    data.bool = true;
-    return decodeGmail(data.body.data);
+      data.bool = true;
+      return decodeGmail(data.body.data);
     }
     else{
       data.bool = true;
@@ -37,7 +37,7 @@ const findGmailData = (data) => {
     console.log(data);
     if(data.mimeType === mimeTypeFallback){
       data.bool = false;
-    return decodeGmail(data.body.data);
+      return decodeGmail(data.body.data);
     }
     else{
       data.bool = false;
@@ -60,7 +60,7 @@ async function getProfile (id,token) {
     method: 'get',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     }
   });
   return resp;
@@ -72,10 +72,9 @@ async function getInbox (id, token) {
     method: 'get',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     }
   });
-  console.log(resp);
   return resp;
 }
 
@@ -85,15 +84,30 @@ async function getMessage (id,msgId,token) {
     method: 'get',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     }
   }).then( value => {
-      value.data.message = findGmailData(value.data.payload);
-      value.data.user = id;
-      value.data.token = token;
-       return value;}).catch(error => console.log(error));
+    let tempResult = {};
+    tempResult.message = findGmailData(value.data.payload);
+    tempResult.mailURL = value.config.url;
+    tempResult.labelIds = value.data.labelIds;
+    tempResult.snippet = value.data.snippet;
+    tempResult.from = value.data.payload.headers.find(value => value.name === 'From').value;
+    tempResult.to = value.data.payload.headers.find(value => value.name === 'To').value;
+    tempResult.subject = value.data.payload.headers.find(value => value.name === 'Subject').value;
+    tempResult.date = value.data.payload.headers.find(value => value.name === 'Date').value;
+    tempResult.bIsHTML = value.data.payload.bool;
+    tempResult.token = token;
+    tempResult.user = id;
+    tempResult.msgId = msgId;
+
+    value.data.user = id;
+    value.data.token = token;
+    return tempResult;
+  })
+  .catch(error => console.log(error));
   //debugger;
-   //resp.data.message = findGmailData(resp.data.payload);
+  //resp.data.message = findGmailData(resp.data.payload);
   //  console.log(resp);
   return resp;
 }
@@ -105,7 +119,7 @@ async function deleteMessage (id, msgId,token) {
     method: 'delete',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     }
   });
   return resp;
@@ -122,7 +136,7 @@ async function deleteGroupMessage (id, msgIds,token) {
     method: 'delete',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     },
     data: idObj,
   });
@@ -142,7 +156,7 @@ async function modifyMessage (id, msgId,token) {
     method: 'post',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     }
   });
   return resp;
@@ -169,7 +183,7 @@ async function modifyGroupMessage (id, msgIds,token) {
     method: 'post',
     url: URL,
     headers: {
-        Authorization: token,
+      Authorization: token,
     },
     data: idObj,
   });

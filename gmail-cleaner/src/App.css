@@ -17,3 +17,137 @@
 .App-link {
   color: #61dafb;
 }
+.WelcomePageDiv {
+  width: 75vw;
+  height: 75vh;
+  position: relative;
+  left: 12.5vw;
+  top: 10vh;
+  background-color: #f7d794;
+  color: #303952;
+  font-size: large;
+  font-weight: 900;
+  box-shadow: 5px 5px 14px 4px #596275;
+  text-shadow: 2px 2px 1px #f3a683;
+}
+
+.WelcomePageText {
+  color: #303952;
+  position: relative;
+  top: 20vh;
+  font-size: 5em;
+}
+
+.HeaderContainer {
+  display: flex;
+  grid-area: header;
+  height: 5em;
+  background-color: #f7d794;
+  color: #303952;
+  font-size: large;
+  font-weight: 900;
+  box-shadow: 5px 5px 14px 4px #596275;
+  text-shadow: 2px 2px 1px #f3a683;
+}
+
+.LogoDiv {
+  flex: 1;
+
+}
+
+.LogoH {
+
+}
+
+.HeaderNameDiv {
+  flex: 1;
+
+}
+.HeaderName {
+
+}
+
+.GLMDiv {
+  position: relative;
+  top: 25%;
+
+}
+
+.emailView {
+
+
+}
+.emailViewHeader {
+
+
+}
+.emailFull {
+
+
+}
+.emailFullHeader {
+
+
+}
+.EmailListDiv {
+  grid-area: main;
+  background-color: #f7d794;
+  color: #303952;
+  font-size: large;
+  font-weight: 900;
+  box-shadow: 5px 5px 14px 4px #596275;
+  text-shadow: 2px 2px 1px #f3a683;
+}
+.gridPage1 {
+  display: grid;
+  grid-template-areas:
+  "header header"
+  "sideBar main";
+  grid-gap: 1em;
+  position: relative;
+  top: 10vh;
+
+}
+.GoogleLoginLarge {
+  position: relative;
+  top: 25%;
+  height: 20px;
+}
+/* GLM code is a Modified style from react-google-login module */
+.GLM {
+  display: inline-block;
+  background: rgb(209, 72, 54);
+  color: rgb(255, 255, 255);
+  width: 56px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Roboto;
+}
+.GoogleLoginMini {
+
+}
+.SideBarContainer {
+  grid-area: sideBar;
+  background-color: #f7d794;
+  color: #303952;
+  font-size: large;
+  font-weight: 900;
+  box-shadow: 5px 5px 14px 4px #596275;
+  text-shadow: 2px 2px 1px #f3a683;
+  width: 15em;
+
+}
+.delButton {
+  font-size: 1.3em;
+  padding: 0 15px;
+  line-height: 1.5;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #786fa6;
+  box-shadow: -1px 4px 9px 0px #cf6a87;
+  text-shadow: 3px 4px 0px #574b90;
+}
