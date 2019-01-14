@@ -4,7 +4,9 @@ _Introduction_
 This app will help user organize and delete groups of old/new emails
 - gmail api link - https://developers.google.com/gmail/api/
 - link to demo - https://youtu.be/vcoiAhr9rQk
-- using modules - react-google-login, base-64, axios, utf8 
+- using modules - react-google-login, base-64, axios, utf8
+- deployed - https://scared-match.surge.sh
+
 _User Story_
 1) Welcome Screen:  
 - user will be prompt to consent for the app to uses gmail account info
