@@ -4,8 +4,17 @@ _Introduction_
 This app will help user organize and delete groups of old/new emails
 - gmail api link - https://developers.google.com/gmail/api/
 - link to demo - https://youtu.be/vcoiAhr9rQk
-- using modules - react-google-login, base-64, axios, utf8
 - deployed - https://scared-match.surge.sh
+
+## Technologies to be used:
+  * HTML
+  * CSS
+  * JavaScript
+  * react-google-login
+  * base-64
+  *	axios
+  * utf8
+  * sanitize-html
 
 _User Story_
 1) Welcome Screen:  
@@ -15,6 +24,7 @@ _User Story_
 3) View Sorting
 - select items to be deleted
 - user can now press delete button
+
 ### Bonus
 - Write an email
 - User can click on model to start an emails
